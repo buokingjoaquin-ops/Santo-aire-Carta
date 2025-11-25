@@ -1,0 +1,88 @@
+/* Variables necesarias */
+:root {
+  --sa-accent-grad: linear-gradient(90deg, #e6b85c, #c48b36);
+  --sa-bg-black: #000000;
+  --sa-font-body: 'Poppins', sans-serif;
+  --sa-accent: #d69e46; 
+}
+
+/* Estilos del Navbar */
+.sa-navbar {
+  background-color: var(--sa-bg-black);
+  padding: 12px 0;
+  position: relative; /* O 'sticky' y top:0 si quieres que se quede fijo */
+  z-index: 9999;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: var(--sa-font-body);
+  width: 100%;
+}
+
+.sa-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.sa-nav-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sa-logo img {
+  height: 50px;
+  width: auto;
+  display: block;
+}
+
+.sa-nav-content {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+a.sa-btn-reservas {
+  background: var(--sa-accent-grad);
+  color: #000 !important;
+  font-weight: 700;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  box-shadow: 0 4px 10px rgba(214, 158, 70, 0.3);
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+
+a.sa-btn-reservas:hover {
+  filter: brightness(1.1);
+  transform: scale(1.02);
+}
+
+.sa-nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.sa-nav-links a {
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.sa-nav-links a:hover {
+  color: var(--sa-accent);
+}
+
+/* Responsive Móvil */
+@media (max-width: 900px) {
+  .sa-nav-inner { flex-direction: column; gap: 15px; padding: 10px 0; }
+  .sa-nav-content { flex-direction: column; width: 100%; gap: 15px; }
+  .sa-nav-links { width: 100%; justify-content: center; gap: 20px; flex-wrap: wrap; }
+}
