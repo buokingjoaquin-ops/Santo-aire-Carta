@@ -5,10 +5,10 @@ document.addEventListener('DOMContentLoaded', function () {
   const select = document.getElementById('diet-filter');
   if (!select) return;
 
-  // Todos los platos que pueden tener dieta
+  // Todos los platos
   const items = document.querySelectorAll('.item');
 
-  // Secciones grandes (Cocktail, Tapas, Platos fríos y calientes, etc.)
+  // Secciones grandes (Cocktail, Tapas, Platos fríos, Carnes, Vinos, etc.)
   const mainSections = document.querySelectorAll('.carta-section');
 
   // Subcategorías internas (Platos fríos, Platos calientes, Sopas, etc.)
@@ -31,29 +31,20 @@ document.addEventListener('DOMContentLoaded', function () {
     // 2) Ocultar subcategorías sin platos visibles
     subSections.forEach(sub => {
       const visibles = sub.querySelectorAll('.item:not(.hidden)');
-      if (visibles.length === 0) {
-        sub.classList.add('section-hidden');
-      } else {
-        sub.classList.remove('section-hidden');
-      }
+      sub.classList.toggle('section-hidden', visibles.length === 0);
     });
 
-    // 3) Ocultar secciones grandes sin subcategorías ni platos visibles
+    // 3) Ocultar secciones grandes sin NINGÚN plato visible dentro
     mainSections.forEach(section => {
-      const visiblesDentro = section.querySelectorAll(
-        '.subsection:not(.section-hidden), .item:not(.hidden)'
-      );
-      if (visiblesDentro.length === 0) {
-        section.classList.add('section-hidden');
-      } else {
-        section.classList.remove('section-hidden');
-      }
+      const visiblesDentro = section.querySelectorAll('.item:not(.hidden)');
+      section.classList.toggle('section-hidden', visiblesDentro.length === 0);
     });
   }
 
   select.addEventListener('change', aplicarFiltro);
   aplicarFiltro();
 });
+
 
 
 
@@ -139,30 +130,38 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+
 /****************************************************
- * BOTÓN VOLVER ARRIBA
+ * Header móvil
  ****************************************************/
 
-const scrollBtn = document.getElementById("backToTop");
 
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 250) {
-    scrollBtn.classList.add("show");
-  } else {
-    scrollBtn.classList.remove("show");
+document.addEventListener('DOMContentLoaded', function () {
+  const miniHeader = document.getElementById('miniHeaderBar');
+
+  function aplicarSticky() {
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const y = window.scrollY || window.pageYOffset;
+
+    if (isMobile && y > 120) {
+      // SOLO EN MÓVIL se activa el modo sticky sin botón de reservas
+      document.body.classList.add('is-sticky');
+      if (siteHeader) {
+        siteHeader.classList.add('is-hidden');
+      }
+    } else {
+      // En escritorio, o cuando vuelves arriba, todo vuelve a la normalidad
+      document.body.classList.remove('is-sticky');
+      if (siteHeader) {
+        siteHeader.classList.remove('is-hidden');
+      }
+    }
   }
+
+  window.addEventListener('scroll', aplicarSticky);
+  window.addEventListener('resize', aplicarSticky);
+  aplicarSticky();
 });
-
-scrollBtn.addEventListener("click", () => {
-  document.documentElement.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-});
-
-
-
-
 
 
 

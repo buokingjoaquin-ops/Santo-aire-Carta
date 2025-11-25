@@ -31,16 +31,108 @@ a {
   margin: 0 auto;
 }
 
-/* =========================================================
-   HEADER / NAVBAR GENERAL
-========================================================= */
+/* ============================= */
+/* HEADER GENERAL  */
+/* ============================= */
 .site-header {
   position: sticky;
   top: 0;
-  z-index: 50;
-  background: #050608;
-  color: #fff;
-  border-bottom: 1px solid rgba(15, 23, 42, 0.8);
+  z-index: 1000;
+  background-color: #050608;        /* sólido, sin transparencia */
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Sombrita cuando flota */
+.site-header.is-floating {
+  background-color: #050608;        /* sigue sólido al hacer scroll */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+}
+
+/* Layout base del header */
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Navegación base */
+.main-nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+/* ============================= */
+/* DESKTOP (se deja todo igual)  */
+/* ============================= */
+@media (min-width: 769px) {
+  .main-nav {
+    justify-content: flex-end;
+  }
+
+  /* En escritorio NO se esconde el botón de reservas */
+  .site-header.is-floating .reserve-pill {
+    display: inline-flex;
+  }
+}
+
+/* ============================= */
+/* MÓVIL                         */
+/* ============================= */
+@media (max-width: 768px) {
+
+  /* Header normal (arriba de todo) */
+  .header-inner {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .main-nav {
+    justify-content: center;
+    font-size: 0.8rem;
+  }
+
+  /* Cuando haces scroll (is-floating):
+     - se esconde el botón de reservas
+     - logo + menú centrados */
+  .site-header.is-floating .reserve-pill {
+    display: none;              /* solo móvil, en PC no se oculta */
+  }
+
+  .site-header.is-floating .header-inner {
+    flex-direction: column;     /* logo arriba, menú abajo */
+    align-items: center;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+  }
+
+  .site-header.is-floating .main-nav {
+    justify-content: center;    /* textos al medio */
+  }
+}
+  @media screen {
+    
+  }
+  .site-header.is-floating .main-nav {
+    display: flex;
+    justify-content: center;   /* centra los enlaces */
+    width: 100%;
+    margin: 0 auto;            /* centra el bloque completo */
+    text-align: center;
+  }
+
+  .site-header.is-floating .main-nav a {
+    padding: 0 8px;            /* opcional: ajusta espacio entre palabras */
+  }
+
+
+body.nav-compact .site-header {
+  background: rgba(0, 0, 0, 0.9);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+body.nav-compact .site-header .reserve-pill {
+  display: none;
 }
 
 .header-inner {
@@ -899,10 +991,9 @@ h1, h2, h3, h4 {
 /* Barra fija de secciones (Cocktail, Cervezas, etc.) */
 .carta-nav-fixed {
   position: fixed;
-  top: 70px;
+  top: auto;
   left: 0;
   width: 100%;
-  background: rgba(10, 10, 14, 0.96);
   backdrop-filter: blur(4px);
   padding: 0.6rem 0.75rem;   /* ← un poco de padding lateral */
   border-bottom: 1px solid rgba(219,149,75,0.35);
@@ -1321,3 +1412,120 @@ h1, h2, h3, h4 {
   .sa-contact-item { justify-content: center; }
   .sa-footer-title { margin: 0 auto 20px auto; }
 }
+
+
+
+/* --------- Comportamiento especial en móvil --------- */
+@media (max-width: 768px) {
+  /* El header fijo arriba en todo el ancho */
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  /* Evitar que el header tape el contenido (ajusta si hace falta) */
+  #mainContent {
+    padding-top: 80px; /* sube o baja este valor según la altura real del header en tu celular */
+  }
+
+  .site-header .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+  }
+
+  /* Asegurarnos que el menú INICIO / CARTA / UBICACIÓN / HORARIO se vea en móvil */
+  .site-header .main-nav {
+    display: flex !important;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-size: 11px;
+  }
+
+  /* Cuando se oculta "Reservas", que el menú ocupe todo el espacio a la derecha */
+  body.nav-compact .site-header .main-nav {
+    margin-left: auto;
+  }
+}
+
+
+
+
+/* --- MINI HEADER PEGADO ARRIBA EN CELULAR --- */
+.mini-header-bar {
+  display: none;              /* por defecto escondida */
+}
+
+/* Solo en móvil */
+@media (max-width: 768px) {
+
+  body.is-sticky .mini-header-bar {
+    display: block;
+  }
+
+  .mini-header-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: #000;         /* ya NO transparente */
+    height: 86px;             /* alto fijo cómodo */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+  }
+
+  .mini-header-inner {
+    height: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 4px 16px;
+    display: flex;
+    flex-direction: column;   /* logo arriba, menú abajo */
+    align-items: center;
+    justify-content: center;  /* todo bien al medio */
+    gap: 4px;
+  }
+
+  .mini-header-logo {
+    height: 32px;
+    width: auto;
+  }
+
+  .mini-main-nav {
+    display: flex;
+    gap: 10px;
+    font-size: 11px;
+    letter-spacing: 0.07em;
+  }
+
+  .mini-main-nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .mini-main-nav a:hover {
+    text-decoration: underline;
+  }
+
+  /* Cuando aparece la mini-barra, empuja el contenido hacia abajo
+     PARA QUE NO QUEDE TAPADO */
+  body.is-sticky #mainContent {
+    padding-top: 86px;   /* mismo valor que height de .mini-header-bar */
+  }
+}
+
+
+/* Solo ocultamos el header grande en móvil cuando tiene .is-hidden */
+@media (max-width: 768px) {
+  .site-header.is-hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+

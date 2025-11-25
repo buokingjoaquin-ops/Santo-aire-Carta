@@ -80,9 +80,16 @@ a.sa-btn-reservas:hover {
   color: var(--sa-accent);
 }
 
+
+
+
 /* Responsive Móvil */
 @media (max-width: 900px) {
   .sa-nav-inner { flex-direction: column; gap: 15px; padding: 10px 0; }
   .sa-nav-content { flex-direction: column; width: 100%; gap: 15px; }
   .sa-nav-links { width: 100%; justify-content: center; gap: 20px; flex-wrap: wrap; }
 }
+
+
+
+
